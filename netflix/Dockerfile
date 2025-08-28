@@ -1,11 +1,11 @@
 FROM nginx:latest
 
+# Copy your file (ensure filename matches!)
 COPY index.html /usr/share/nginx/html/index.html
 
-# Safer way to change port — matches with or without space/semicolon
-RUN sed -ri 's/listen\s+80(\s*default_server)?(;)/listen 8085\2/' /etc/nginx/conf.d/default.conf
+# Keep NGINX on default port 80 — no need to modify config
+# Remove the sed line — it's error-prone and unnecessary
 
-EXPOSE 8085
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
