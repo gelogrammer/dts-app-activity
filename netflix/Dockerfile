@@ -1,15 +1,15 @@
 # Use the latest nginx image
 FROM nginx:latest
 
-# Copy your HTML file to the default nginx web directory
-COPY index.html /usr/share/nginx/html/index.html
+# Copy the renamed HTML file to nginx web root as index.html (so it loads by default)
+COPY netflix-index.html /usr/share/nginx/html/index.html
 
-# Optional: Customize nginx to listen on a different port (e.g., 8085)
-# Only if you need it — otherwise, keep default port 80
+# Change Nginx config to listen on port 8085 instead of 80
 RUN sed -i 's/listen 80;/listen 8085;/' /etc/nginx/conf.d/default.conf
 
-# Document that the container listens on port 8085
+# Expose ports 8085 and 3000
 EXPOSE 8085
+EXPOSE 3000
 
-# Nginx will start automatically with the default command
-# CMD ["nginx", "-g", "daemon off;"] ← already set in nginx image
+# Start Nginx (default command already set, but shown for clarity)
+CMD ["nginx", "-g", "daemon off;"]
